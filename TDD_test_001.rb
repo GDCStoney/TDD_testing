@@ -59,7 +59,59 @@ class Equal
   end
 end
 
+class Include
+  attr_accessor :test1, :test2
+
+  def initialize(test2)
+    @test2 = test2
+  end
+
+  def compare
+    if @test1 != nil
+      @test1.include? @test2
+    else
+      nil
+    end
+  end
+end
+
+class Respond_to
+  attr_accessor :test1, :test2
+
+  def initialize(test2)
+    @test2 = test2
+  end
+
+  def compare
+    if @test1 !=nil
+      @test1.respond_to? test2
+    else
+      nil
+    end
+  end
+end
+
+def expect(value)
+  Expect.new(value)
+end
+
+def eq(value)
+  Equal.new(value)
+end
+
+def respond_to(value)
+  Respond_to.new(value)
+end
+
+def inc(value)
+  Include.new(value)
+end
+
 #puts Equal.new( true ).compare( false )
 #puts Equal.new(true).test1
 
-puts Expect.new(true).to (Equal.new( false ) )
+puts expect(true).to eq true
+
+puts expect(true).to eq false
+puts expect("agfag").to inc "f"
+puts expect(Expect.new("string")).to respond_to "to_equal"
